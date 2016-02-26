@@ -6,4 +6,5 @@ module.exports = _.assign(
   require './persistence'
   require './models'
   require './amazon'
+  require './services'
 )
