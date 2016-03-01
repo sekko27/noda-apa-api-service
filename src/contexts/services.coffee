@@ -6,6 +6,7 @@ module.exports =
       module: Helper.service 'APAProvider'
       args: [
         Helper.ref 'apaService'
+        Helper.ref 'logger'
       ]
 
   itemLookupCacheKeyResolver:
@@ -16,8 +17,7 @@ module.exports =
     create:
       module: Helper.Service 'APAProxy'
     properties:
-      service: Helper.ref 'apaService'
-      grid: Helper.ref 'grid'
+      cache: Helper.ref 'apaCache'
 
   gridFSAdapter:
     create:

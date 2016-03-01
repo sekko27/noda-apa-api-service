@@ -11,7 +11,9 @@ class Cache
         .then (key, cb) => @adapter.load(key, cb)
         .else (key, cb) =>
           async.waterfall([
-            (loadCallback) => @provider(key, params, loadCallback)
+            (loadCallback) => @provider(params, loadCallback)
             (value, loadCallback) => @adapter.save(key, value, loadCallback)
           ], cb)
     ], callback)
+
+module.exports = Cache
