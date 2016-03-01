@@ -1,12 +1,7 @@
 class APAProxyService
-  #Inject service
-  #Inject grid
+  #Inject cache
 
-  exists: (itemId, callback) ->
-    @grid.exists itemId:itemId, callback
+  itemLookup: (asin, callback) ->
+    cache.get itemId: asin, callback
 
-  get: (itemId, callback) ->
-    @exists itemId, (err, found) =>
-      return callback(err) if err
-      return @fetch(itemId, callback) if not found
-      @grid.createRead
+module.exports = APAProxyService
