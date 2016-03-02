@@ -23,6 +23,7 @@ class BatchCommand extends Command
       asins = _.map files, (f) -> f.filename
       entryAsin = (e) -> e.name.replace /^([^\.]+).*/, "$1"
       newCounter = 0
+      totalNumber = 0
 
       callback null,
         numberOfAddedAsins: -> newCounter
@@ -36,9 +37,10 @@ class BatchCommand extends Command
           if 0 > _.indexOf asins, asin
             asins.push asin
             newCounter++
-            @logger.info "Adding new asin [#{newCounter}]: #{asin}"
+            @logger.info "Adding new asin [#{newCounter} / #{totalNumber}]: #{asin}"
         logger: @logger
         service: @apaProxyService
+        setTotal: (total) -> totalNumber = total
         printResult: =>
           @logger.info "#{newCounter} new asins have been added to the meta store"
 
@@ -58,6 +60,8 @@ class BatchCommand extends Command
       .on 'end', -> ctx.logger.info 'Recursive walking has been finished'
       .pipe es.mapSync ctx.entryAsin
       .pipe es.writeArray (err, arr) ->
+        ctx.logger.info "Start fetching #{arr.length} asins"
+        ctx.setTotal arr.length
         return setImmediate(->callback(err)) if err
         async.eachSeries(
           arr
