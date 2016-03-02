@@ -16,4 +16,7 @@ class GridFsAdapter
       setImmediate => callback null, @grid.createReadStream _id: file._id
     value.pipe(stream)
 
+  count: (callback) ->
+    @grid.files.count({}, callback)
+
 module.exports = GridFsAdapter

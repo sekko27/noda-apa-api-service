@@ -7,4 +7,8 @@ class APAProxyService
   batchItemLookup: (asin, callback) ->
     @cache.get ItemId: asin, (err, stream) ->
       setImmediate(->callback(err, asin))
+
+  count: (callback) ->
+    @cache.count callback
+
 module.exports = APAProxyService

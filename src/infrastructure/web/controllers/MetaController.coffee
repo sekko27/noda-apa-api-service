@@ -9,4 +9,9 @@ class MetaController
 
   json: (req, res) ->
 
+  count: (req, res) ->
+    @service.count (err, cnt) ->
+      return res.errorResponse(err) if err
+      res.json(count: cnt)
+
 module.exports = MetaController

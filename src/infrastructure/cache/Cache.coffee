@@ -16,4 +16,7 @@ class Cache
           ], cb)
     ], callback)
 
+  count: (callback) ->
+    @adapter.count callback
+
 module.exports = Cache

@@ -9,3 +9,4 @@ module.exports = (controllers) ->
     # Login
     app.get '/meta/:asin/xml', action('meta', 'xml')
     app.get '/meta/:asin/json', action('meta', 'json')
+    app.get '/meta/count', action('meta', 'count')
