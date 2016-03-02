@@ -9,12 +9,11 @@ class GridFsAdapter
     setImmediate -> callback null, stream
 
   save: (key, value, callback) ->
-    console.log 'saving', key
     stream = @grid.createWriteStream(filename: key)
     stream.on 'error', callback
     stream.on 'close', (file) =>
       return callback("file-not-found") if (not file) or (not file?._id)
-      setTimeout ( => callback null, @grid.createReadStream _id: file._id), 2000
+      setImmediate => callback null, @grid.createReadStream _id: file._id
     value.pipe(stream)
 
 module.exports = GridFsAdapter
