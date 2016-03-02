@@ -21,6 +21,10 @@ class BatchCommand extends Command
     @grid.files.find({}).toArray (err, files) =>
       return setImmediate(->callback(err)) if err
       asins = _.map files, (f) -> f.filename
+      mapper = (memo, current) ->
+        memo[current] = true
+        memo
+      asinMap = _.reduce asins, mapper, {}
       entryAsin = (e) -> e.name.replace /^([^\.]+).*/, "$1"
       newCounter = 0
       totalNumber = 0
@@ -32,10 +36,11 @@ class BatchCommand extends Command
         entryAsin: entryAsin
         walkingParameters:
           root: params.root
-          fileFilter: (e) -> e.name.match(/bz2$/) and (0 > _.indexOf asins, entryAsin(e))
+          fileFilter: (e) -> e.name.match(/bz2$/) and not _.has(asinMap, entryAsin(e))
         add: (asin) =>
-          if 0 > _.indexOf asins, asin
+          if not _.has(asinMap, asin)
             asins.push asin
+            asinMap[asin] = true
             newCounter++
             @logger.info "Adding new asin [#{newCounter} / #{totalNumber}]: #{asin}"
         logger: @logger
