@@ -7,5 +7,7 @@ module.exports = _.assign(
   require './models'
   require './amazon'
   require './services'
+  require './models'
+  require './repositories'
   require './commands'
 )
