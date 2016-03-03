@@ -1,4 +1,4 @@
-Helper.ref = require('wire-context-helper').Helper()
+Helper = require('wire-context-helper').Helper()
 
 module.exports =
   imageRepository:

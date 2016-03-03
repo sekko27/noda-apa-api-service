@@ -13,6 +13,7 @@ module.exports =
     create:
       module: Helper.model('ImageSet')
       args: [
+        Helper.ref 'mongoose'
         Helper.ref 'imageModel'
       ]
 

@@ -1,8 +1,9 @@
 ContextExtractor = require './ContextExtractor'
 SimpleExtractor = require './SimpleExtractor'
 ArrayExtractor = require './ArrayExtractor'
+ImageResolverTransformator = require './ImageResolverTransformator'
 
-module.exports = ->
+module.exports = (imageTransformator) ->
   imageExtractor = (path) ->
     new ContextExtractor path, [
       {
@@ -17,7 +18,7 @@ module.exports = ->
         name: 'width'
         extractor: new SimpleExtractor 'x:Width'
       }
-    ]
+    ], imageTransformator
 
   new ContextExtractor '//x:ItemLookupResponse/x:Items/x:Item', [
     {

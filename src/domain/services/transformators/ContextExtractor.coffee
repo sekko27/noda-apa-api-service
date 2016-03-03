@@ -3,7 +3,7 @@ async = require('async')
 Extractor = require './Extractor'
 
 class ContextExtractor extends Extractor
-  constructor: (@rootSelector, @subExtractors, @default={}) ->
+  constructor: (@rootSelector, @subExtractors, @transformator = null, @default={}) ->
 
   run: (doc, callback) ->
     rootDocument = doc.get(@rootSelector, @nsDef())
@@ -15,7 +15,13 @@ class ContextExtractor extends Extractor
         memo
       {}
     )
-    async.parallel(tasks, callback)
+    async.parallel(
+      tasks
+      (err, result) =>
+        return setImmediate(->callback(err)) if err
+        return @transformator.transform(result, callback) if @transformator
+        setImmediate(->callback(null, result))
+    )
 
 module.exports = ContextExtractor
 

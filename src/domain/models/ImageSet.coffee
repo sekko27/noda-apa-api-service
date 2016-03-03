@@ -1,4 +1,4 @@
-module.exports = () ->
+module.exports = (driver) ->
   smallImage:
     type: driver.Schema.Types.ObjectId
     ref: 'Image'

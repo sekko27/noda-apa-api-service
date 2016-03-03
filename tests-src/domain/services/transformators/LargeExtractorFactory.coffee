@@ -6,7 +6,6 @@ Helper = require('wire-context-helper').Helper()
 Util = require './Util'
 chai = require 'chai'
 {assert, expect} = chai
-LargeExtractorFactory = require Helper.service('transformators/LargeExtractorFactory')
 
 describe 'Array extractor', ->
   context = null
@@ -20,7 +19,6 @@ describe 'Array extractor', ->
       done()
 
   it 'should extract', (done) ->
-    extractor = LargeExtractorFactory()
-    extractor.run document, (err, result) ->
+    context.largeExtractor.run document, (err, result) ->
       console.log util.inspect result, depth: null
       done()
