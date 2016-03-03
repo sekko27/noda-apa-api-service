@@ -130,5 +130,4 @@ module.exports = ->
       name: 'title'
       extractor: new SimpleExtractor 'x:ItemAttributes/x:Title'
     }
-
   ]
