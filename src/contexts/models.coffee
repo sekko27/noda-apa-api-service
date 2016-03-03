@@ -31,6 +31,14 @@ module.exports =
         Helper.ref 'linkModel'
         Helper.ref 'imageSetModel'
         Helper.ref 'imageModel'
+        Helper.ref 'browseNodeModel'
+      ]
+  browseNodeModel:
+    create:
+      module: Helper.model('BrowseNode')
+      args: [
+        Helper.ref 'mongoose'
+        Helper.ref 'storageConnection'
       ]
 
 

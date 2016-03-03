@@ -12,7 +12,7 @@ describe 'Array extractor', ->
   document = null
 
   before (done) ->
-    Util.initAndLoadDocument '5020339644', (err, result) ->
+    Util.initAndLoadDocument '1783287314', (err, result) ->
       return done(err) if err
       context = result.ctx
       document = result.document
@@ -20,5 +20,5 @@ describe 'Array extractor', ->
 
   it 'should extract', (done) ->
     context.largeExtractor.run document, (err, result) ->
-      console.log util.inspect result, depth: null
+      console.log err, util.inspect result, depth: null
       done()

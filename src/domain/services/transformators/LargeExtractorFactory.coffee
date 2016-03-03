@@ -1,9 +1,11 @@
+_ = require 'lodash'
 ContextExtractor = require './ContextExtractor'
 SimpleExtractor = require './SimpleExtractor'
 ArrayExtractor = require './ArrayExtractor'
+BrowseNodeExtractor = require './BrowseNodeExtractor'
 ImageResolverTransformator = require './ImageResolverTransformator'
 
-module.exports = (imageTransformator) ->
+module.exports = (imageTransformator, browseNodeTransformator) ->
   imageExtractor = (path) ->
     new ContextExtractor path, [
       {
@@ -130,5 +132,9 @@ module.exports = (imageTransformator) ->
     {
       name: 'title'
       extractor: new SimpleExtractor 'x:ItemAttributes/x:Title'
+    }
+    {
+      name: 'nodes'
+      extractor: new ArrayExtractor 'x:BrowseNodes/x:BrowseNode', new BrowseNodeExtractor(), browseNodeTransformator
     }
   ]

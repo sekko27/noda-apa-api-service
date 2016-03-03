@@ -42,15 +42,29 @@ module.exports =
       logger: Helper.ref 'logger'
       repository: Helper.ref 'imageRepository'
 
+  browseNodeService:
+    create:
+      module: Helper.Service 'BrowseNode'
+    properties:
+      logger: Helper.ref 'logger'
+      repository: Helper.ref 'browseNodeRepository'
+
   imageResolverTransformator:
     create:
       module: Helper.service 'transformators/ImageResolverTransformator'
     properties:
       imageService: Helper.ref 'imageService'
 
+  browseNodeTransformator:
+    create:
+      module: Helper.service 'transformators/BrowseNodeTransformator'
+    properties:
+      browseNodeService: Helper.ref 'browseNodeService'
+
   largeExtractor:
     create:
       module: Helper.service 'transformators/LargeExtractorFactory'
       args: [
         Helper.ref 'imageResolverTransformator'
+        Helper.ref 'browseNodeTransformator'
       ]

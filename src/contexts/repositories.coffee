@@ -14,3 +14,10 @@ module.exports =
       args: [
         Helper.ref 'metaModel'
       ]
+
+  browseNodeRepository:
+    create:
+      module: Helper.Repository('')
+      args: [
+        Helper.ref 'browseNodeModel'
+      ]

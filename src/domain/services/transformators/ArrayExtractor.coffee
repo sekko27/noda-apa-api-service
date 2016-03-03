@@ -3,7 +3,7 @@ async = require('async')
 Extractor = require './Extractor'
 
 class ArrayExtractor extends Extractor
-  constructor: (@selector, @subExtractor, @default=[]) ->
+  constructor: (@selector, @subExtractor, @transformator = null, @default=[]) ->
 
   run: (doc, callback) ->
     subDocuments = doc.find(@selector, @nsDef())
@@ -11,7 +11,10 @@ class ArrayExtractor extends Extractor
       subDocuments,
       (subDocument, cb) =>
         @subExtractor.run subDocument, cb
-      callback
+      (err, result) =>
+        return setImmediate(->callback(err)) if err
+        return @transformator.transform(result, callback) if @transformator
+        setImmediate(->callback(null, result))
     )
 
 module.exports = ArrayExtractor

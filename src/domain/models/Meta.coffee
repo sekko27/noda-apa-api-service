@@ -68,5 +68,9 @@ module.exports = (driver, connection, Link, ImageSet) ->
       type: String
       required: true
       index: true
+    nodes: [
+      type: driver.Schema.Types.ObjectId
+      ref: 'BrowseNode'
+    ]
 
   connection.model('Meta', schema)
