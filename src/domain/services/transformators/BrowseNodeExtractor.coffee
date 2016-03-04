@@ -10,7 +10,6 @@ class BrowseNodeExtractor extends Extractor
     @idExtractor = new SimpleExtractor 'x:BrowseNodeId'
     @nameExtractor = new SimpleExtractor 'x:Name'
     @categoryExtractor = new SimpleExtractor 'x:IsCategoryRoot', '0', transform: (value, callback) -> setImmediate(->callback(null, value == '1'))
-    @childrenExtractor = -> new ArrayExtractor 'x:Children/x:BrowseNode', new BrowseNodeExtractor()
     @ancestorExtractor = -> new ArrayExtractor 'x:Ancestors/x:BrowseNode', new BrowseNodeExtractor()
 
   run: (doc, callback) ->
@@ -23,16 +22,14 @@ class BrowseNodeExtractor extends Extractor
     extractor.run doc, (err, result) =>
       return setImmediate(->callback(err)) if err
       mapper = (item) ->
-        parent = item.parents?[0] ? null
-        id: item.id
-        name: item.name
-        category: item.category
-        parent: parent?.id ? null
-        parents:
-          if parent
-            [id: parent.id, name: parent.name, category: parent.category, parent: parent.parents?[0]?.id ? null].concat (parent.parents ? [])
-          else
-            []
+        parents = if _.isArray(item.parents) then _.flatMap(item.parents) else []
+        parent = _.last(parents) ? null
+        current =
+          id: item.id
+          name: item.name
+          category: item.category
+          parent: parent?.id ? null
+        parents.concat [current]
       setImmediate -> callback null, mapper(result)
 
 module.exports = BrowseNodeExtractor

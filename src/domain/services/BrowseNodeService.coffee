@@ -6,4 +6,7 @@ class BrowseNodeService
       return @repository.create(node, callback) if not result
       setImmediate(->callback(null, result))
 
+  findByHumanId: (id, callback) ->
+    @repository.findOne id: id, callback
+
 module.exports = BrowseNodeService

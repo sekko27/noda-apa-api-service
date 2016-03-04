@@ -6,25 +6,30 @@ class BrowseNodeTransformator
   #Inject logger
   transform: (value, callback) ->
     async.mapSeries(
-      value,
-      (browseNode, cb) =>
-        if browseNode.parents and _.isArray(browseNode.parents) and not _.isEmpty(browseNode.parents)
-          return setImmediate(->cb("Parent mismatch")) if browseNode.parent != browseNode.parents[0].id
-          @transform browseNode.parents, (err, parentIds) =>
-            return setImmediate(->cb(err)) if err
-            return setImmediate(->cb("No first parent")) if not parentIds?[0]
-            bn =
-              id: browseNode.id
-              name: browseNode.name
-              category: browseNode.category
-              parent: parentIds?[0]
-            console.log '0', bn
-            @browseNodeService.findOrCreate bn, (err, instance) ->
-              setImmediate(->cb(err, instance?._id))
-        else
-          console.log '1', browseNode
-          @browseNodeService.findOrCreate browseNode, (err, instance) ->
-            setImmediate(->cb(err, instance?._id))
+      value
+      (branch, cb) =>
+        @transformBranch branch, (err, branchNodes) ->
+          return setImmediate(->cb(err)) if err
+          return setImmediate(->cb("No branch result")) if not _.isArray(branchNodes)
+          setImmediate(->cb(null, _.last(branchNodes)?._id))
       callback
     )
+
+  transformBranch: (branch, callback) ->
+    async.mapSeries(
+      branch
+      (node, cb) =>
+        @resolveParent node, (err, parentId) =>
+          return setImmediate(->cb(err)) if err
+          doc = id: node.id, category: node.category, name: node.name, parent: parentId
+          @browseNodeService.findOrCreate doc, cb
+      callback
+    )
+
+  resolveParent: (node, callback) ->
+    parentId = node.parent ? null
+    return setImmediate(->callback(null, null)) if parentId == null
+    @browseNodeService.findByHumanId parentId, (err, result) ->
+      setImmediate(->callback(err, result?._id))
+
 module.exports = BrowseNodeTransformator

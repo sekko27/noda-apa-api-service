@@ -20,5 +20,5 @@ describe 'Array extractor', ->
 
   it 'should extract', (done) ->
     context.largeExtractor.run document, (err, result) ->
-      console.log err, util.inspect result, depth: null
+      console.log err, result
       done()
