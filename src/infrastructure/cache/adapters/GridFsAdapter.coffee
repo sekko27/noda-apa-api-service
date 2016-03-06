@@ -13,7 +13,7 @@ class GridFsAdapter
     stream.on 'error', callback
     stream.on 'close', (file) =>
       return callback("file-not-found") if (not file) or (not file?._id)
-      setImmediate => callback null, @grid.createReadStream _id: file._id
+      @load key, callback
     value.pipe(stream)
 
   count: (callback) ->
