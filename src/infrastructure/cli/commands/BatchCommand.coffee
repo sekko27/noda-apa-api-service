@@ -72,7 +72,7 @@ class BatchCommand extends Command
   executeByWalking: (cachePath, params, ctx, callback) ->
     readdirp(ctx.walkingParameters, undefined, undefined)
       .on 'warn', (err) -> ctx.logger.warn err
-      .on 'error', (err) -> ctx.logger.error err
+      .on 'error', callback
       .on 'end', -> ctx.logger.info 'Recursive walking has been finished'
       .pipe es.mapSync entryAsin
       .pipe es.writeArray (err, arr) =>
@@ -98,7 +98,7 @@ class BatchCommand extends Command
         ctx.service.batchItemLookup asin, (err) ->
           return setImmediate(->cb(err)) if err
           ctx.add asin
-          setTimeout(cb, 2000)
+          setTimeout(cb, 1100)
       (err) ->
         setImmediate(->callback(err, ctx))
   )
