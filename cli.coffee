@@ -8,7 +8,7 @@ async = require 'async'
 core.then (ctx) ->
   ctx.commandDispatcher.run (err, resultContext) ->
     if err
-      ctx.logger.err(err)
+      ctx.logger.error(err)
       process.exit(1)
     else
       resultContext.printResult()

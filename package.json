@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/sekko27/noda-apa-api-service#readme",
   "dependencies": {
-    "apa-api": "0.1.4",
+    "apa-api": "0.1.5",
     "async": "^1.5.2",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
@@ -43,6 +43,8 @@
     "postal": "^1.0.8",
     "q": "^1.4.1",
     "readdirp": "^2.0.0",
+    "request": "^2.69.0",
+    "requestretry": "^1.6.0",
     "response-time": "^2.3.1",
     "through2": "^2.0.1",
     "winston": "^2.2.0",
