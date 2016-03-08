@@ -68,3 +68,19 @@ module.exports =
         Helper.ref 'imageResolverTransformator'
         Helper.ref 'browseNodeTransformator'
       ]
+
+  headerExtractor:
+    create:
+      module: Helper.service 'transformators/HeaderExtractorFactory'
+      args: [ ]
+
+  metaService:
+    create:
+      module: Helper.Service('Meta')
+      args: []
+    properties:
+      logger: Helper.ref 'logger'
+      grid: Helper.ref 'grid'
+      apaProxyService: Helper.ref 'apaProxyService'
+      headerExtractor: Helper.ref 'headerExtractor'
+      largeExtractor: Helper.ref 'largeExtractor'

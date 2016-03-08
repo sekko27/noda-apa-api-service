@@ -7,7 +7,7 @@ class ArrayExtractor extends Extractor
 
   run: (doc, callback) ->
     subDocuments = doc.find(@selector, @nsDef())
-    async.map(
+    async.mapSeries(
       subDocuments,
       (subDocument, cb) =>
         @subExtractor.run subDocument, cb
