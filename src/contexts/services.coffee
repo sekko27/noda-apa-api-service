@@ -84,3 +84,4 @@ module.exports =
       apaProxyService: Helper.ref 'apaProxyService'
       headerExtractor: Helper.ref 'headerExtractor'
       largeExtractor: Helper.ref 'largeExtractor'
+      metaRepository: Helper.ref 'metaRepository'

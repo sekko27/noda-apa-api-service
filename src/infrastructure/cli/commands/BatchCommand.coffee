@@ -98,7 +98,7 @@ class BatchCommand extends Command
         ctx.service.batchItemLookup asin, (err) ->
           return setImmediate(->cb(err)) if err
           ctx.add asin
-          setTimeout(cb, 1100)
+          setTimeout(cb, 1000)
       (err) ->
         setImmediate(->callback(err, ctx))
   )

@@ -26,6 +26,14 @@ module.exports =
       logger: Helper.ref 'logger'
       metaService: Helper.ref 'metaService'
 
+  metaCommand:
+    create:
+      module: Helper.Command('Meta')
+      args: []
+    properties:
+      logger: Helper.ref 'logger'
+      metaService: Helper.ref 'metaService'
+
   commandDispatcher:
     create:
       module: Helper.command('CommandDispatcher')
@@ -36,5 +44,6 @@ module.exports =
         batch: Helper.ref 'batchCommand'
         fetch: Helper.ref 'fetchCommand'
         updateFileMeta: Helper.ref 'updateFileMetaCommand'
+        meta: Helper.ref 'metaCommand'
 
 

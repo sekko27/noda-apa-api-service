@@ -15,7 +15,7 @@ class ContextExtractor extends Extractor
         memo
       {}
     )
-    async.parallel(
+    async.series(
       tasks
       (err, result) =>
         return setImmediate(->callback(err)) if err

@@ -13,6 +13,7 @@ class BatchCommand extends Command
     params
     .usage('Single fetch by asin\nUsage $0 --command=fetch --asin=[asin]')
     .demand(['command', 'asin'])
+    .string('asin')
     .describe('asin', 'ASIN code for the book')
     .describe('command', 'Command (fetch)')
 
