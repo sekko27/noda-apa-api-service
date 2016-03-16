@@ -24,8 +24,7 @@ class MetaService
   parseHeader: (asin, callback) ->
     @xml asin, (err, document) =>
       return setImmediate(-> callback(err)) if err
-      @headerExtractor.run document, (err, meta) =>
-        setImmediate -> callback err, {metadata: {amazon: meta}}
+      @headerExtractor.run document, callback
 
   parseMeta: (asin, callback) ->
     @xml asin, (err, document) =>
@@ -88,7 +87,7 @@ class MetaService
             else
               @logger.info "[#{cnt}/#{all}] - #{asin} - OK"
             setImmediate(->cb(null, meta))
-        callback
+        (err) -> callback(err, all)
       )
 
   createMeta: (asin, callback) ->

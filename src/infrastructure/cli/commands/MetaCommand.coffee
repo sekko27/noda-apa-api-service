@@ -20,8 +20,8 @@ class MetaCommand extends Command
       .describe('type', 'Synchronizing type: increment or full')
       .describe('command', 'Command (batch)')
 
-  execute: (callback) ->
-    @metaService.createAllMissingMeta(callback)
+  execute: (params, callback) ->
+    @metaService.createAllMissingMeta (err, size) => callback err, printResult: => @logger.info "Importing #{size} asins"
 
 
 module.exports = MetaCommand
